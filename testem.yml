@@ -1,0 +1,14 @@
+framework: jasmine
+
+launch_in_dev:
+- PhantomJS
+# - Chrome
+# - Firefox
+# - Safari
+# - Opera
+# - PhantomJS
+
+src_files:
+- src/build/device.js
+
+- spec/build/**/*.js
