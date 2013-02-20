@@ -8,7 +8,7 @@ http://www.w3.org/TR/geolocation-API/
 @author     Javier Jimenez Villar <javi@tapquo.com> || @soyjavi
 ###
 
-Device.Gps = ((dvc, undefined_) ->
+Device.Gps = do (dvc = Device) ->
   _position = null
   _watcher = null
   CALLBACK =
@@ -65,7 +65,4 @@ Device.Gps = ((dvc, undefined_) ->
   get: get
   watch: watch
   position: position
-  address: address
   stop: stop
-
-)(Device)

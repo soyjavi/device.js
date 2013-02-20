@@ -1,0 +1,12 @@
+{
+  "name": "device.js",
+  "description": "",
+  "version": "0.0.1",
+  "homepage": "http://",
+  "author": {
+    "name": "Javi Jimenez Villar",
+    "site": "http://twitter.com/soyjavi"},
+  "main": ["./device.js"],
+  "keywords": [ "mobile" ],
+  "license": [ {"type": "MIT"}]
+}

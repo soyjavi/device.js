@@ -1,6 +1,6 @@
 module.exports = (grunt) ->
   grunt.initConfig
-    pkg: grunt.file.readJSON "package/package.json"
+    pkg: grunt.file.readJSON "package/component.json"
 
     meta:
       file: 'device'
@@ -12,7 +12,7 @@ module.exports = (grunt) ->
         """
 
     resources:
-      coffee: ['src/**/*.coffee']
+      coffee: ['src/device.coffee', 'src/device.*.coffee']
       test: ['spec/**/*.coffee']
       js: ['build/src/**/*.js']
 
@@ -22,9 +22,7 @@ module.exports = (grunt) ->
         preserve_dirs: true
       compile:
         files:
-          # 'package/another.js': ['src/**/*.coffee']
-          'build/<%= meta.name %>.js': ['<%= resources.coffee %>']
-          # 'path/to/result.js': 'path/to/source.coffee'
+          'build/device.js': ['<%= resources.coffee %>']
 
 
     uglify:
@@ -33,7 +31,7 @@ module.exports = (grunt) ->
         banner: '<%= meta.banner %>'
       my_target:
         files:
-          'package/<%= meta.file %>.js': ['build/<%= meta.file %>.js']
+          'package/device.js': ['build/device.js']
 
 
     watch:
