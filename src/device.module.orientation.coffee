@@ -8,7 +8,7 @@ http://www.w3.org/TR/orientation-event/
 @author     Javier Jimenez Villar <javi@tapquo.com> || @soyjavi
 ###
 
-Device.Orientation = (() ->
+Device.Orientation = do ->
   EVENTS =
     ORIENTATION: "deviceorientation"
     MOTION: "devicemotion"
@@ -34,4 +34,3 @@ Device.Orientation = (() ->
   onMotion: onMotion
   onNeedsCalibration: onNeedsCalibration
 
-)()

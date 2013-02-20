@@ -7,7 +7,7 @@ Pending to final SPEC
 @author     Javier Jimenez Villar <javi@tapquo.com> || @soyjavi
 ###
 
-Device.Notification = (() ->
+Device.Notification = do ->
 
   ###
   Shows a custom alert or dialog box.
@@ -62,4 +62,3 @@ Device.Notification = (() ->
   confirm: confirm
   beep: beep
   vibrate: vibrate
-)()
