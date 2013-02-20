@@ -7,9 +7,9 @@ Pending to final SPEC
 @author     Javier Jimenez Villar <javi@tapquo.com> || @soyjavi
 ###
 
-Device.Audio = (() ->
-  _background = document.createElement("audio")
-  _sound = document.createElement("audio")
+Device.Audio = do ->
+  _background = document.createElement "audio"
+  _sound = document.createElement "audio"
 
   ###
   Plays music in background with automatic rewind.
@@ -40,4 +40,3 @@ Device.Audio = (() ->
 
   background: background
   play: play
-)()
