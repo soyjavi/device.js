@@ -28,6 +28,6 @@ Device.Camera = do (dvc = Device) ->
       _failed "Device no available"
 
   _failed = (error) ->
-    console.error "Device.GPS [ERROR] - ", error
+    console.error "Device.Camera [ERROR] - ", error
 
   get: get
