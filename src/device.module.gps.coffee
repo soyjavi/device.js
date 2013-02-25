@@ -20,21 +20,21 @@ Device.Gps = do (dvc = Device) ->
     timeout: 10000
     maximumAge: 60000
 
-  get: (callbacks, options) ->
+  get = (callbacks, options) ->
     if _isReady()
       _bindCallbacks callbacks
       navigator.geolocation.getCurrentPosition _success, _error, options
 
-  watch: (callbacks, options) ->
+  watch = (callbacks, options) ->
     if _isReady()
       _bindCallbacks callbacks
       _watcher = navigator.geolocation.watchPosition(_success, _error, options)
 
-  position: -> _position
+  position = -> _position
 
-  stop: -> _clearPosition()
+  stop = -> _clearPosition()
 
-  _isReady: ->
+  _isReady = ->
     if navigator.geolocation
       _clearPosition()
       true
@@ -42,25 +42,25 @@ Device.Gps = do (dvc = Device) ->
       console.error "Lungo.Device.Gps [ERROR]: navigator.geolocation is innacesible."
       false
 
-  _clearPosition: ->
+  _clearPosition = ->
     _position = null
     if _watcher
       navigator.geolocation.clearWatch _watcher
       _watcher = null
 
-  _bindCallbacks: (callbacks) ->
+  _bindCallbacks = (callbacks) ->
     CALLBACK.success = (callbacks.success or null)
     CALLBACK.error = (callbacks.error or null)
 
-  _success: (position) ->
+  _success = (position) ->
     _position = position.coords
     CALLBACK.success.call CALLBACK.success, position
 
-  _error: (error) ->
+  _error = (error) ->
     _clearPosition()
     CALLBACK.error.call CALLBACK.error, error
 
-  get: get
-  watch: watch
-  position: position
+  get: get,
+  watch: watch,
+  position: position,
   stop: stop

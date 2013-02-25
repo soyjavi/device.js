@@ -1,4 +1,4 @@
-# Device 0.0.1
+# Device 0.0.2
 ### JavaScript library that detects HTML5 features in the user’s browser
 
 ## Why use Device

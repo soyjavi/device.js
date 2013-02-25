@@ -1,11 +1,12 @@
 ###
-    DeviceJS 0.0.1
-    http://tapquo.com
+    DeviceJS 0.0.2
+    http://
 
-    Copyright (C) 2011,2012 Javi Jiménez Villar (@soyjavi)
+    Copyright (C) 2013 Javi Jiménez Villar (@soyjavi) - Licensed MIT
 ###
 
-Device =
+window.Device =
+
   addEvent: (element, event, callback) ->
     if element.addEventListener
       element.addEventListener event, callback, false
@@ -14,4 +15,10 @@ Device =
     else
       element["on#{event}"] = callback
 
-window.Device = Device
+  removeEvent: (element, event, callback) ->
+    if element.removeEventListener
+      element.removeEventListener event, callback, false
+    else if element.detachEvent
+      element.detachEvent "on" + event, callback
+    else
+      element["on#{event}"] = null
