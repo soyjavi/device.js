@@ -11,7 +11,9 @@ http://www.w3.org/TR/2012/WD-netinfo-api-20121129/
 
 Device.Connection = do (dvc = Device) ->
 
-  online: (callback) -> dvc.addEvent window, "online", callback
+  online = (callback) -> dvc.addEvent window, "online", callback
 
-  offline: (callback) -> dvc.addEvent window, "offline", callback
+  offline = (callback) -> dvc.addEvent window, "offline", callback
 
+  online: online
+  offline: offline
