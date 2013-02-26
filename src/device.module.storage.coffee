@@ -36,7 +36,9 @@ Device.Storage = do ->
 
   _handler = (storage, key, value) ->
     storage = window[storage]
-    if value
+    if not key
+      _clear(storage)
+    else if value
       _saveKey storage, key, value
     else if value is null
       _removeKey storage, key
@@ -47,9 +49,9 @@ Device.Storage = do ->
 
   _removeKey = (storage, key) -> storage.removeItem key
 
+  _clear = (storage) -> storage.clear()
+
   _getKey = (storage, key) -> JSON.parse storage.getItem(key)
 
   local: local
   session: session
-
-
