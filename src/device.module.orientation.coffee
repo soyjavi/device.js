@@ -20,6 +20,10 @@ Device.Orientation = do (dvc = Device) ->
 
   change = (callback) ->
     dvc.addEvent window, EVENT.ORIENTATION, (event) ->
+
+      if event.webkitCompassHeading
+        heading = event.webkitCompassHeading + window.orientation
+
       if window.DeviceOrientationEvent
         x = event.gamma
         y = event.beta
@@ -35,6 +39,7 @@ Device.Orientation = do (dvc = Device) ->
         y: Math.round(y)
         z: z
         direction: Math.round(direction)
+        heading: heading
       callback.call this, coordinates
 
   motion = (callback) ->
