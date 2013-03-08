@@ -7,18 +7,18 @@
 
 window.Device =
 
-  addEvent: (element, event, callback) ->
+  addEvent: (element, eventName, callback) ->
     if element.addEventListener
-      element.addEventListener event, callback, false
+      element.addEventListener eventName, callback, false
     else if element.attachEvent
-      element.attachEvent "on#{event}", callback
+      element.attachEvent "on#{eventName}", callback
     else
-      element["on#{event}"] = callback
+      element["on#{eventName}"] = callback
 
-  removeEvent: (element, event, callback) ->
+  removeEvent: (element, eventName, callback) ->
     if element.removeEventListener
-      element.removeEventListener event, callback, false
+      element.removeEventListener eventName, callback, false
     else if element.detachEvent
-      element.detachEvent "on" + event, callback
+      element.detachEvent "on" + eventName, callback
     else
-      element["on#{event}"] = null
+      element["on#{eventName}"] = null
