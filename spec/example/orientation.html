@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>DeviceJS</title>
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="device.css">
 </head>
 <body>
@@ -24,6 +26,11 @@
         <strong>0</strong>
         <small>Direction</small>
     </div>
+    <div class="value hea">
+        <strong>0</strong>
+        <small>Heading</small>
+    </div>
+
     <div class="value xa">
         <strong>0</strong>
         <small>X Acel</small>
@@ -40,6 +47,7 @@
       <img src="html5.png"/>
     </div>
 
+
     <script src="quo.debug.js"></script>
     <script src="../../package/device.js"></script>
 
@@ -50,12 +58,14 @@
             var y = $$("div.value.y > strong");
             var z = $$("div.value.z > strong");
             var dir = $$("div.value.dir > strong");
+            var hea = $$("div.value.hea > strong");
             var img = $$("div.orientation > img");
             Device.Orientation.change(function(event) {
                 x.html(event.x);
                 y.html(event.y);
                 z.html(event.z);
                 dir.html(event.direction);
+                hea.html(event.heading);
 
                 // Apply the transform to the image
                 img.vendor("transform", "rotate(" +
