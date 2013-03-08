@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DeviceJS</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+    <style>
+        body {
+            text-align: center;
+        }
+        div.value {
+            width: 42px;
+            height: 42px;
+            text-align: center;
+            background: #ddd;
+            float: left;
+            margin-right: 1px;
+        }
+            div.value > strong {
+                font-size: 16px;
+                line-height: 40px;
+                display: block;
+            }
+            div.value > strong.accel {
+                color: red !important;
+            }
+            div.value > small {
+                position: relative;
+                top: -20px;
+                font-size: 8px;
+            }
+        div.orientation {
+            top: 32px;
+            position: relative;
+            -webkit-perspective: 300;
+            perspective: 300;
+        }
+            div.orientation > img {
+                width: 300px;
+            }
+    </style>
+<body>
+    <h2>Device orientation</h2>
+    <div class="value x">
+        <strong>0</strong>
+        <small>Left/Right</small>
+    </div>
+    <div class="value y">
+        <strong>0</strong>
+        <small>Front/Back</small>
+    </div>
+    <div class="value z">
+        <strong>0</strong>
+        <small>Motion</small>
+    </div>
+    <div class="value dir">
+        <strong>0</strong>
+        <small>Direction</small>
+    </div>
+    <div class="value xa">
+        <strong>0</strong>
+        <small>X Acel</small>
+    </div>
+    <div class="value ya">
+        <strong>0</strong>
+        <small>Y Acel</small>
+    </div>
+    <div class="value za">
+        <strong>0</strong>
+        <small>Z Acel</small>
+    </div>
+    <div class="orientation">
+      <img src="html5.png"/>
+    </div>
+
+    <script src="quo.debug.js"></script>
+    <script src="../../package/device.js"></script>
+
+    <!-- ==================== Device.Orientation ==================== -->
+    <script>
+        // Orientation
+        var x = $$("div.value.x > strong");
+        var y = $$("div.value.y > strong");
+        var z = $$("div.value.z > strong");
+        var dir = $$("div.value.dir > strong");
+        var img = $$("div.orientation > img");
+        // Motion
+        var xa = $$("div.value.xa > strong");
+        var ya = $$("div.value.ya > strong");
+        var za = $$("div.value.za > strong");
+
+        if (window.Orientation) {
+            Device.Orientation.change(function(event) {
+                x.html(event.x);
+                y.html(event.y);
+                z.html(event.z);
+                dir.html(event.direction);
+
+                // Apply the transform to the image
+                img.vendor("transform", "rotate(" +
+                  event.x + "deg) rotate3d(1,0,0, " + (event.y * -1) + "deg)");
+            });
+        }
+        if (window.Motion) {
+            Device.Orientation.motion(function(event) {
+                xa.html(event.x);
+                ya.html(event.y);
+                za.html(event.z);
+                (event.x > 5 || event.x < -5) ? xa.addClass("accel") : xa.removeClass("accel");
+                (event.y > 5 || event.y < -5) ? ya.addClass("accel") : ya.removeClass("accel");
+                (event.z > 5 || event.z < -5) ? za.addClass("accel") : za.removeClass("accel");
+            });
+        }
+    </script>
+</body>
+</html>

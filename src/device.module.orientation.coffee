@@ -4,33 +4,53 @@ DOM events that provide information about the physical orientation and motion of
 http://www.w3.org/TR/orientation-event/
 
 @namespace  Device
-@class      Camera
+@class      Orientation
 @author     Javier Jimenez Villar <javi@tapquo.com> || @soyjavi
 ###
 
-Device.Orientation = do ->
-  EVENTS =
+Device.Orientation = do (dvc = Device) ->
+
+  EVENT =
     ORIENTATION: "deviceorientation"
     MOTION: "devicemotion"
     COMPASS_CALIBRATION: "compassneedscalibration"
 
-  onChange = (callback) ->
-    _addEvent EVENTS.ORIENTATION, callback
+  window.Orientation = window.DeviceOrientationEvent or window.OrientationEvent
+  window.Motion = window.DeviceMotionEvent
 
-  onMotion = (callback) ->
-    _addEvent EVENTS.MOTION, callback
+  change = (callback) ->
+    dvc.addEvent window, EVENT.ORIENTATION, (event) ->
+      if window.DeviceOrientationEvent
+        x = event.gamma
+        y = event.beta
+        z = null
+        direction = event.alpha
+      else if window.OrientationEvent
+        x = event.x * 90
+        y = event.y * -90
+        z = event.z
+        direction = null
+      coordinates =
+        x: Math.round(x)
+        y: Math.round(y)
+        z: z
+        direction: Math.round(direction)
+      callback.call this, coordinates
+
+  motion = (callback) ->
+    dvc.addEvent window, EVENT.MOTION, (event) ->
+      acceleration = event.accelerationIncludingGravity
+      acceleration = event.acceleration
+      coordinates =
+        x: acceleration.x.toFixed(2)
+        y: acceleration.y.toFixed(2)
+        z: acceleration.z.toFixed(2)
+      callback.call this, coordinates
 
   onNeedsCalibration = (callback) ->
-    _addEvent EVENTS.COMPASS_CALIBRATION, callback
+    dvc.addEvent window, EVENT.COMPASS_CALIBRATION, callback
 
-  _addEvent = (event, callback) ->
-
-    #@todo: Cross-browser: IE fix
-    window.addEventListener event, ((event) ->
-      callback.apply callback, event
-    ), true
-
-  onChange: onChange
-  onMotion: onMotion
+  change: change
+  motion: motion
   onNeedsCalibration: onNeedsCalibration
 
