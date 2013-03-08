@@ -8,6 +8,7 @@ div.value {
     background: #ddd;
     float: left;
     margin-right: 1px;
+    margin-bottom: 1px;
     overflow: hidden;
 }
     div.value.double {
