@@ -4,42 +4,8 @@
     <meta charset="UTF-8">
     <title>DeviceJS</title>
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="device.css">
 </head>
-    <style>
-        body {
-            text-align: center;
-        }
-        div.value {
-            width: 42px;
-            height: 42px;
-            text-align: center;
-            background: #ddd;
-            float: left;
-            margin-right: 1px;
-        }
-            div.value > strong {
-                font-size: 16px;
-                line-height: 40px;
-                display: block;
-            }
-            div.value > strong.accel {
-                color: red !important;
-            }
-            div.value > small {
-                position: relative;
-                top: -20px;
-                font-size: 8px;
-            }
-        div.orientation {
-            top: 32px;
-            position: relative;
-            -webkit-perspective: 300;
-            perspective: 300;
-        }
-            div.orientation > img {
-                width: 300px;
-            }
-    </style>
 <body>
     <h2>Device orientation</h2>
     <div class="value x">
@@ -79,18 +45,12 @@
 
     <!-- ==================== Device.Orientation ==================== -->
     <script>
-        // Orientation
-        var x = $$("div.value.x > strong");
-        var y = $$("div.value.y > strong");
-        var z = $$("div.value.z > strong");
-        var dir = $$("div.value.dir > strong");
-        var img = $$("div.orientation > img");
-        // Motion
-        var xa = $$("div.value.xa > strong");
-        var ya = $$("div.value.ya > strong");
-        var za = $$("div.value.za > strong");
-
         if (window.Orientation) {
+            var x = $$("div.value.x > strong");
+            var y = $$("div.value.y > strong");
+            var z = $$("div.value.z > strong");
+            var dir = $$("div.value.dir > strong");
+            var img = $$("div.orientation > img");
             Device.Orientation.change(function(event) {
                 x.html(event.x);
                 y.html(event.y);
@@ -103,13 +63,16 @@
             });
         }
         if (window.Motion) {
+            var xa = $$("div.value.xa > strong");
+            var ya = $$("div.value.ya > strong");
+            var za = $$("div.value.za > strong");
             Device.Orientation.motion(function(event) {
                 xa.html(event.x);
                 ya.html(event.y);
                 za.html(event.z);
-                (event.x > 5 || event.x < -5) ? xa.addClass("accel") : xa.removeClass("accel");
-                (event.y > 5 || event.y < -5) ? ya.addClass("accel") : ya.removeClass("accel");
-                (event.z > 5 || event.z < -5) ? za.addClass("accel") : za.removeClass("accel");
+                (event.x > 5 || event.x < -5) ? xa.addClass("alert") : xa.removeClass("alert");
+                (event.y > 5 || event.y < -5) ? ya.addClass("alert") : ya.removeClass("alert");
+                (event.z > 5 || event.z < -5) ? za.addClass("alert") : za.removeClass("alert");
             });
         }
     </script>

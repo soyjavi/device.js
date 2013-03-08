@@ -1,0 +1,38 @@
+body {
+    text-align: center;
+}
+div.value {
+    width: 42px;
+    height: 42px;
+    text-align: center;
+    background: #ddd;
+    float: left;
+    margin-right: 1px;
+    overflow: hidden;
+}
+    div.value.double {
+        width: 64px;
+    }
+    div.value > strong {
+        font-size: 16px;
+        line-height: 40px;
+        display: block;
+    }
+    div.value > strong.alert {
+        color: red !important;
+    }
+    div.value > small {
+        position: relative;
+        top: -20px;
+        font-size: 8px;
+    }
+
+div.orientation {
+    top: 32px;
+    position: relative;
+    -webkit-perspective: 300;
+    perspective: 300;
+}
+    div.orientation > img {
+        width: 300px;
+    }
