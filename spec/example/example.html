@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DeviceJS</title>
+</head>
+    <style>
+        div {
+            width: 64px;
+            height: 64px;
+            font-size: 10px;
+            text-align: center;
+            line-height: 64px;
+        }
+        div.left {
+            float: left;
+        }
+    </style>
+<body>
+
+    <video autoplay controls id="sss"></video>
+
+    <div style="background: grey;">Full-Screen</div>
+    <br/>
+
+    <div class="left" style="background: red;"></div>
+    <div class="left" style="background: green;"></div>
+    <div class="left" style="background: blue;"></div>
+    <div class="left" style="background: magenta;"></div>
+
+
+
+    <script src="https://raw.github.com/soyjavi/package-quojs/master/quo.debug.js"></script>
+    <script src="../../package/device.js"></script>
+
+    <!-- ==================== Device.Camera ==================== -->
+    <script>
+        Device.Camera.get({video: true, audio: true}, function(response) {
+            document.querySelector('video').src = window.URL.createObjectURL(response);
+        });
+    </script>
+
+    <!-- ==================== Device.Fullscreen ==================== -->
+    <script>
+        el = document.querySelectorAll("div")[0]
+        el.addEventListener("click", function(event)  {
+            if (Device.FullScreen.enabled()) {
+                Device.FullScreen.cancel();
+            } else {
+                Device.FullScreen.enable(this);
+            }
+        });
+    </script>
+
+    <!-- ==================== Device.Connection ==================== -->
+    <script>
+        Device.Connection.online(function(event) {
+            alert("Conectado");
+        });
+
+        Device.Connection.offline(function(event) {
+            alert("Desconectado");
+        });
+    </script>
+
+    <!-- ==================== Device.Storage ==================== -->
+    <script>
+        Device.Storage.local("key_local", "@soyjavi")
+        Device.Storage.local("obj_local", {twitter: "@soyjavi"})
+        Device.Storage.session("key_session", "@soyjavi")
+        Device.Storage.session("obj_session", {twitter: "@soyjavi"})
+        console.error("local", Device.Storage.local("key_local"), Device.Storage.local("obj_local"));
+        console.error("session", Device.Storage.session("key_session"), Device.Storage.session("obj_session"));
+        Device.Storage.local("key_local", null)
+        console.error("local", Device.Storage.local("key_local"), Device.Storage.local("obj_local"));
+    </script>
+</body>
+</html>
