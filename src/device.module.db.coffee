@@ -7,13 +7,6 @@ WebSQL
 ###
 
 Device.DB = do(dvc = Device) ->
-  ERROR = lng.Constants.ERROR
-  CONFIG =
-    name: "lungo_db"
-    version: "1.0"
-    size: 65536
-    schema: []
-
   db = null
 
   ###
@@ -21,13 +14,20 @@ Device.DB = do(dvc = Device) ->
   @method init
   @param {object} Configuration for the Database
   ###
-  init = (db_config) ->
-    CONFIG = lng.Core.mix(CONFIG, db_config)
-    db = openDatabase(CONFIG.name, CONFIG.version, CONFIG.name, CONFIG.size)
+  init = (name, version, size, schema) ->
+    db = openDatabase name, version, name, size
     if db
-      _createSchema()
+      schema_len = schema.length
+      return unless schema_len
+      i = 0
+      while i < schema_len
+        current = schema[i]
+        _regenerateTable current
+        _createTable current.name, current.fields
+        i++
+
     else
-      throw new Error(ERROR.DATABASE)
+      throw new Error "[ERROR] Device.DB: DB unnecesible"
 
 
   ###
@@ -96,26 +96,12 @@ Device.DB = do(dvc = Device) ->
   @param {Function} Callback when the process is complete
   ###
   execute = (sql, callback) ->
-    lng.Core.log 1, "lng.Data.Sql >> " + sql
     db.transaction (transaction) ->
       transaction.executeSql sql, [], ((transaction, rs) ->
         _callbackResponse callback, rs
       ), (transaction, error) ->
         transaction.executedQuery = sql
         _throwError.apply null, arguments
-
-
-  _createSchema = ->
-    schema = CONFIG.schema
-    schema_len = schema.length
-    return  unless schema_len
-    i = 0
-
-    while i < schema_len
-      current = schema[i]
-      _regenerateTable current
-      _createTable current.name, current.fields
-      i++
 
   _createTable = (table, fields) ->
     sql_fields = ""
@@ -156,7 +142,7 @@ Device.DB = do(dvc = Device) ->
     execute "INSERT INTO " + table + " (" + fields + ") VALUES (" + values + ")"
 
   _throwError = (transaction, error) ->
-    throw new Error(ERROR.DATABASE_TRANSACTION + error.code + ": " + error.message + " \n Executed query: " + transaction.executedQuery)
+    throw new Error("[ERROR] Device.DB " + error.code + ": " + error.message + " \n Executed query: " + transaction.executedQuery)
 
   init: init
   select: select
