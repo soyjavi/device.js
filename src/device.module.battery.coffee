@@ -19,10 +19,8 @@ Device.Battery = do (dvc = Device) ->
 
   ###
   @todo
-  @method get
-  @param  {object}    audio/video booleans
-          {function}  Success callback
-          {function}  Error callback
+  @method status
+  @return {object}    Battery status
   ###
   status = ->
     if navigator.battery?
@@ -31,12 +29,42 @@ Device.Battery = do (dvc = Device) ->
       _failed "Device no available"
 
 
+  ###
+  @todo
+  @method onCharging
+  @param  {object}    audio/video booleans
+          {function}  Success callback
+          {function}  Error callback
+  @return {object}    Battery status
+
+  ###
   onCharging = (callback) -> _event EVENT.CHARGING, callback
 
+
+  ###
+  @todo
+  @method onChargingTime
+  @param  {function}  Success callback
+  @return {object}    Battery status
+  ###
   onChargingTime = (callback) -> _event EVENT.CHARGING_TIME, callback
 
+
+  ###
+  @todo
+  @method onDischargingTime
+  @param  {function}  Success callback
+  @return {object}    Battery status
+  ###
   onDischargingTime = (callback) -> _event EVENT.DISCHARGING_TIME, callback
 
+
+  ###
+  @todo
+  @method onLevel
+  @param  {function}  Success callback
+  @return {object}    Battery status
+  ###
   onLevel = (callback) -> _event EVENT.LEVEL, callback
 
   _event = (event, callback) ->
