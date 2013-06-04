@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DeviceJS</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="device.css">
+</head>
+<body>
+    <h2>Battery Status</h2>
+    <div class="value level">
+        <strong>0</strong>
+        <small>Level</small>
+    </div>
+    <div class="value charging">
+        <strong>0</strong>
+        <small>charging</small>
+    </div>
+    <div class="value charging_time">
+        <strong>0</strong>
+        <small>chargingTime</small>
+    </div>
+    <div class="value discharging_time">
+        <strong>0</strong>
+        <small>dischargingTime</small>
+    </div>
+
+    <script src="quo.debug.js"></script>
+    <script src="../../package/device.js"></script>
+
+    <!-- ==================== Device.Orientation ==================== -->
+    <script>
+        Device.Page.hide(function() {
+            console.error("Page hidden", Device.Page.state())
+        });
+
+        Device.Page.visible(function() {
+            console.error("Page showed", Device.Page.state())
+        });
+    </script>
+</body>
+</html>
