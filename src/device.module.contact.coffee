@@ -36,7 +36,7 @@ Device.Contact = do (dvc = Device) ->
     _instance.find properties, ((success) ->), ((error) ->), options
     @
 
-  delete = ->
+  remove = ->
     @
 
   find = ->

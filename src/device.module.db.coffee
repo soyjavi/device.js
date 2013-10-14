@@ -57,7 +57,7 @@ Device.DB = do(dvc = Device) ->
   @param {object} Object (or Array of objects) to insert in table
   ###
   insert = (table, data, callback) ->
-    if lng.Core.toType(data) is "object"
+    if _toType(data) is "object"
       _insertRow table, data
     else
       for row of data
@@ -106,7 +106,7 @@ Device.DB = do(dvc = Device) ->
   _createTable = (table, fields) ->
     sql_fields = ""
     for field of fields
-      if lng.Core.isOwnProperty(fields, field)
+      if _isOwnProperty(fields, field)
         sql_fields += ", "  if sql_fields
         sql_fields += field + " " + fields[field]
     execute "CREATE TABLE IF NOT EXISTS " + table + " (" + sql_fields + ");"
@@ -120,7 +120,7 @@ Device.DB = do(dvc = Device) ->
   _convertToSql = (fields, separator) ->
     sql = ""
     for field of fields
-      if lng.Core.isOwnProperty(fields, field)
+      if _isOwnProperty(fields, field)
         value = fields[field]
         sql += " " + separator + " "  if sql
         sql += field + "="
@@ -128,13 +128,13 @@ Device.DB = do(dvc = Device) ->
     sql
 
   _callbackResponse = (callback, response) ->
-    setTimeout callback, 100, response  if lng.Core.toType(callback) is "function"
+    setTimeout callback, 100, response  if _toType(callback) is "function"
 
   _insertRow = (table, row) ->
     fields = ""
     values = ""
     for field of row
-      if lng.Core.isOwnProperty(row, field)
+      if _isOwnProperty(row, field)
         value = row[field]
         fields += (if (fields) then ", " + field else field)
         values += ", "  if values
@@ -143,6 +143,10 @@ Device.DB = do(dvc = Device) ->
 
   _throwError = (transaction, error) ->
     throw new Error("[ERROR] Device.DB " + error.code + ": " + error.message + " \n Executed query: " + transaction.executedQuery)
+
+  _toType = (obj) -> Object::.toString.call(obj).match(/\s([a-z|A-Z]+)/)[1].toLowerCase()
+
+  _isOwnProperty = (object, property) -> Object::.hasOwnProperty.call object, property
 
   init: init
   select: select
